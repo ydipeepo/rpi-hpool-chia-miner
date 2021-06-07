@@ -1,0 +1,49 @@
+#
+# * 这是 K8S 的宣言文件。
+#   通过 K8S 使用时请根据您的构成进行修改。
+# * 如果找不到 P 盘目录，则被忽略。
+#   节点和存储不均等的情况下，可以在磷酸盐侧准备空目录。
+#
+
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: rpi-hpool-chia-miner
+  labels: { app: hpool, tier: chia-miner }
+spec:
+  selector:
+    matchLabels: { app: hpool, tier: chia-miner }
+  template:
+    metadata:
+      labels: { app: hpool, tier: chia-miner }
+    spec:
+      hostNetwork: true
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: "kubernetes.io/hostname"
+      #           operator: In
+      #           values:
+      #           - worker1.local
+      #           - worker2.local
+      #           - worker3.local
+      #           - worker4.local
+      #           - worker5.local
+      containers:
+      - name: rpi-hpool-chia-miner
+        image: "master.local:1234/rpi-hpool-chia-miner:latest"
+        imagePullPolicy: Always
+        env:
+        - { name: API_KEY, value: "00000000-0000-0000-0000-000000000000" }
+        - { name: SCAN_INTERVAL, value: "30" }
+        volumeMounts:
+        - { name: plot-volume-0, mountPath: /plot-0, readOnly: true }
+        - { name: plot-volume-1, mountPath: /plot-1, readOnly: true }
+        # - { name: plot-volume-2, mountPath: /plot-2, readOnly: true }
+      volumes:
+      - { name: plot-volume-0, hostPath: { type: Directory, path: /mnt/sda1 } }
+      - { name: plot-volume-1, hostPath: { type: Directory, path: /mnt/sdb1 } }
+      # - { name: plot-volume-2, hostPath: { type: Directory, path: /mnt/sdc1 } }
