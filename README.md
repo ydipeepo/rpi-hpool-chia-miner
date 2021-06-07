@@ -5,7 +5,7 @@
 
 ## 建造 Docker 镜像
 
-下载来并解压缩文件后在树莓派上运行:
+在树莓派上 `git clone` 后运行:
 
 ```bash
 $ sudo docker build . -t rpi-hpool-chia-miner
