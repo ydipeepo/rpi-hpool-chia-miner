@@ -1,3 +1,5 @@
+中文 | [日本語](https://fanyi.baidu.com/transpage?query=https%3A%2F%2Fgithub.com%2Fydipeepo%2Frpi-hpool-chia-miner%2Fblob%2Fmain%2FREADME.md&from=zh&to=jp) | [English](https://fanyi.baidu.com/transpage?query=https%3A%2F%2Fgithub.com%2Fydipeepo%2Frpi-hpool-chia-miner%2Fblob%2Fmain%2FREADME.md&from=zh&to=en)
+
 # 在树莓派 4B 上 HPOOL Chia 挖矿
 
 通过 Docker 或 K8S 运行 HPOOL Chia 挖矿软件。这是非官方的。
