@@ -56,5 +56,5 @@ echo "[MINER] 启动挖矿..."
 while true; do
 	./hpool-chia-miner-linux-arm
 	echo "[MINER] 意外终止，将在 5 分钟后恢复..."
-	sleep 60
+	sleep 300
 done
