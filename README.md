@@ -1,4 +1,4 @@
-中文 | [日本語](https://fanyi.baidu.com/transpage?query=https%3A%2F%2Fgithub.com%2Fydipeepo%2Frpi-hpool-chia-miner%2Fblob%2Fmain%2FREADME.md&from=zh&to=jp) | [English](https://fanyi.baidu.com/transpage?query=https%3A%2F%2Fgithub.com%2Fydipeepo%2Frpi-hpool-chia-miner%2Fblob%2Fmain%2FREADME.md&from=zh&to=en)
+中文 | <a href="https://fanyi.baidu.com/transpage?query=https%3A%2F%2Fgithub.com%2Fydipeepo%2Frpi-hpool-chia-miner%2Fblob%2Fmain%2FREADME.md&from=zh&to=jp" rel="noopener noreferrer nofollow" target="_blank">日本語</a> | <a href="https://fanyi.baidu.com/transpage?query=https%3A%2F%2Fgithub.com%2Fydipeepo%2Frpi-hpool-chia-miner%2Fblob%2Fmain%2FREADME.md&from=zh&to=en" rel="noopener noreferrer nofollow" target="_blank">English</a>
 
 # 在树莓派 4B 上 HPOOL Chia 挖矿
 
