@@ -1,4 +1,8 @@
-中文 | [日本語](https://translate.google.com/translate?sl=zh-CN&tl=ja&u=https%3A%2F%2Fgithub.com%2Fydipeepo%2Frpi-hpool-chia-miner%2Fblob%2Fmain%2FREADME.md) | [English](https://translate.google.com/translate?sl=zh-CN&tl=en&u=https%3A%2F%2Fgithub.com%2Fydipeepo%2Frpi-hpool-chia-miner%2Fblob%2Fmain%2FREADME.md)
+* 中文
+* 日本語 (翻訳おかしかったので下部に日本語で追記しました)
+* [English](https://translate.google.com/translate?sl=zh-CN&tl=en&u=https%3A%2F%2Fgithub.com%2Fydipeepo%2Frpi-hpool-chia-miner%2Fblob%2Fmain%2FREADME.md)
+
+----
 
 ![BIG O](https://github.com/ydipeepo/nvme-mate/raw/master/doc/big-o.png)
 
@@ -34,7 +38,7 @@ $ sudo docker run \
 
 ## 通过 K8S 使用时
 
-1. 如果是通过 K8S 来使用的话，可以预先 push 到某个共同的私人注册表上:
+1. 如果是通过 K8S 来使用的话，可以预先 `push` 到某个共同的私人注册表上:
 
 ```bash
 $ sudo docker tag rpi-hpool-chia-miner master.local:1234/rpi-hpool-chia-miner
@@ -68,3 +72,67 @@ $ kubectl create -f ./deployment.yaml
 w/repo      [worker3] <> P_7, P_8, P_9
             ...          ...
 ```
+
+----
+
+# ラズパイ 4B で HPOOL Chia マイニング
+
+Docker もしくは K8S を通して HPOOL Chia マイニングします。非公式です。
+前提条件はここでは省略しますが、Ubuntu Server の最新版を使用しました。
+
+
+## Docker イメージをビルド
+
+ラズパイ上に `git clone` した後、そのラズパイ上で Docker イメージをビルドしておきます:
+
+```bash
+$ sudo docker build . -t rpi-hpool-chia-miner
+```
+
+## Docker 上で直接動かす場合
+
+以下のコマンドでマイナーを開始します:
+
+```bash
+$ sudo docker run \
+	-e API_KEY=********-****-****-****-************ \
+	-e SCAN_INTERVAL=15 \
+	-v /mnt/sda1:/plot-0 \
+	-v /mnt/sdb1:/plot-1 \
+	-it rpi-hpool-chia-miner
+```
+
+* `API_KEY`: HPOOL の API キーを指定します。(必須)
+* `SCAN_INTERVAL`: プロットのスキャン間隔を分単位で指定します。(必須)
+* `/plot-N` コンテナ側ディレクトリは 0 から 9 まで対応しています。
+  ディレクトリが存在すれば自動で対象として読み込みます。
+
+## K8S を通して使う場合
+
+1. K8S を通して使用する場合、先ほどビルドしたイメージを
+   どこかプライベートな Docker レジストリ上に `push` しておきます:
+
+```bash
+$ sudo docker tag rpi-hpool-chia-miner master.local:1234/rpi-hpool-chia-miner
+$ sudo docker push master.local:1234/rpi-hpool-chia-miner
+```
+
+* 2 行それぞれの IP アドレス (かホスト名) とポート番号はレジストリに合わせて変更してください。
+  (`master.local` と `1234` という部分)
+
+2. クラスター構成に合わせてデプロイメントマニフェスト (`deployment.yaml`) を修正してください。
+
+* `env` 以下の `API_KEY` にあなたの API キーを設定してください。
+* 各ノードにはプロット含むハードディスクが接続されていると思いますが、
+  もし一部のノードでのみ実行する必要がある場合は `nodeAffinity` の部分を修正してください。
+
+3. クラスターにデプロイする:
+
+```bash
+$ kubectl create -f ./deployment.yaml
+```
+
+## ほか
+
+* このリポジトリは [hpool-dev/chia-miner](https://github.com/hpool-dev/chia-miner) (v1.4.0-2) を使っています。
+  使用時は彼らのライセンスに従ってください。
